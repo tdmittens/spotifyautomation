@@ -17,19 +17,6 @@ scope = "playlist-modify-private playlist-read-private playlist-modify-public"
 headers = {}
 data = {}
 
-##functions
-
-# auth_code = requests.get(
-#     AUTH_URL,
-#     {
-#         'client_id': client_id,
-#         'response_type': 'code',  #from spotify docs
-#         'redirect_url': REDIRECT_URL,
-#         'scope': scope,
-#     })
-
-# print(auth_code.url)
-
 auth_header = base64.urlsafe_b64encode(
     (client_id + ':' + client_secret_id).encode())
 
