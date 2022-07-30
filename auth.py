@@ -1,12 +1,13 @@
 import requests
+import urllib
 import json
 import base64
 import os
 from tokens import client_id, client_secret_id
 #urls
 
-REDIRECT_URL = "https://tarandeep.ca"
 AUTH_URL = "https://accounts.spotify.com/authorize"
+REDIRECT_URL = "https://tarandeep.ca"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
 
 # scope - https://developer.spotify.com/documentation/general/guides/authorization/scopes/
@@ -22,11 +23,28 @@ auth_header = base64.urlsafe_b64encode(
 
 decode_auth_header = auth_header.decode("ascii")
 
+##FOR USER
+#auth link
+auth_link = f"{AUTH_URL}?client_id={client_id}&response_type=code&redirect_uri={urllib.parse.quote_plus(REDIRECT_URL)}&scope={urllib.parse.quote_plus(scope)}"
+print(auth_link)
+
 headers['Authorization'] = f"Basic {decode_auth_header}"
-data['grant_type'] = "client_credentials"
+data['grant_type'] = "authorization_code"
+data['code'] = ""  #manual input from auth_link
 data['json'] = True
-data['scope'] = scope
+data['redirect_uri'] = REDIRECT_URL
 
 r = requests.post(url=TOKEN_URL, headers=headers, data=data)
 
+# ##FOR PUBLIC
+# #post request
+# headers['Authorization'] = f"Basic {decode_auth_header}"
+# data['grant_type'] = "client_credentials"
+# data['json'] = True
+# data['scope'] = scope
+
+# r = requests.post(url=TOKEN_URL, headers=headers, data=data)
+
 #print(json.dumps(r.json(), indent=2))
+
+auth_token = r.json()['access_token']
