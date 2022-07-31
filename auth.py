@@ -11,7 +11,7 @@ REDIRECT_URL = "https://tarandeep.ca"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
 
 # scope - https://developer.spotify.com/documentation/general/guides/authorization/scopes/
-scope = "playlist-modify-private playlist-read-private playlist-modify-public"
+scope = "playlist-modify-private playlist-read-private playlist-modify-public user-top-read user-library-read user-library-modify"
 
 # dictionaries - for POST request
 
