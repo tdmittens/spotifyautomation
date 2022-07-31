@@ -1,7 +1,7 @@
 import json
 import requests
 from tokens import client_id, client_secret_id, user_id
-from auth import auth_token
+from refresh import auth_token
 
 
 class LikedSongs:
