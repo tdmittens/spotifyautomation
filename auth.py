@@ -3,7 +3,7 @@ import urllib
 import json
 import base64
 import os
-from tokens import client_id, client_secret_id
+from tokens import client_id, client_secret_id, manual_code
 #urls
 
 AUTH_URL = "https://accounts.spotify.com/authorize"
@@ -26,11 +26,11 @@ decode_auth_header = auth_header.decode("ascii")
 ##FOR USER
 #auth link
 auth_link = f"{AUTH_URL}?client_id={client_id}&response_type=code&redirect_uri={urllib.parse.quote_plus(REDIRECT_URL)}&scope={urllib.parse.quote_plus(scope)}"
-print(auth_link)
+print(auth_link)  #code has to be retrived manually in current state
 
 headers['Authorization'] = f"Basic {decode_auth_header}"
 data['grant_type'] = "authorization_code"
-data['code'] = ""  #manual input from auth_link
+data['code'] = manual_code  #manual input from auth_link
 data['json'] = True
 data['redirect_uri'] = REDIRECT_URL
 
@@ -45,6 +45,10 @@ r = requests.post(url=TOKEN_URL, headers=headers, data=data)
 
 # r = requests.post(url=TOKEN_URL, headers=headers, data=data)
 
-#print(json.dumps(r.json(), indent=2))
+print(json.dumps(r.json(), indent=2))
 
 auth_token = r.json()['access_token']
+refresh_token = r.json()['refresh_token']
+
+print(auth_token)
+print(refresh_token)
